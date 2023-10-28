@@ -14,6 +14,6 @@ import lombok.Setter;
 public class ModeloDto {
     private Long id;
     private String nombre;
-    private CategoriaDto categoriaDto;
-    private MarcaDto marcaDto;
+    private CategoriaDto categoria;
+    private MarcaDto marca;
 }
