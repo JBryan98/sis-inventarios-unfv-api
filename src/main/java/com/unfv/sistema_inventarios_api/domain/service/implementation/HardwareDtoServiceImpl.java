@@ -4,6 +4,7 @@ import com.unfv.sistema_inventarios_api.domain.dto.HardwareDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.HardwareDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IHardwareDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Hardware;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.HardwareSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IHardwareService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.HardwareRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.HardwareRequest;
@@ -24,8 +25,8 @@ public class HardwareDtoServiceImpl implements IHardwareDtoService {
     private final HardwareRequestMapper hardwareRequestMapper;
 
     @Override
-    public Page<HardwareDto> findAll(Pageable pageable) {
-        return hardwareService.findAll(pageable).map(hardwareDtoMapper::toDto);
+    public Page<HardwareDto> findAll(HardwareSpecification specification, Pageable pageable) {
+        return hardwareService.findAll(specification, pageable).map(hardwareDtoMapper::toDto);
     }
 
     @Override

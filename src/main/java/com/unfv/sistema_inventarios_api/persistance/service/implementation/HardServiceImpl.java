@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.Hardware;
 import com.unfv.sistema_inventarios_api.persistance.repository.HardwareRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.HardwareSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IHardwareService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class HardServiceImpl implements IHardwareService {
     private final HardwareRepository hardwareRepository;
     @Override
     @Transactional(readOnly = true)
-    public Page<Hardware> findAll(Pageable pageable) {
-        return hardwareRepository.findAll(pageable);
+    public Page<Hardware> findAll(HardwareSpecification specification, Pageable pageable) {
+        return hardwareRepository.findAll(specification, pageable);
     }
 
     @Override

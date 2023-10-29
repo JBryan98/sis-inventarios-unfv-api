@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.presentation.controller;
 
 import com.unfv.sistema_inventarios_api.domain.dto.HardwareDto;
 import com.unfv.sistema_inventarios_api.domain.service.IHardwareDtoService;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.HardwareSpecification;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.HardwareRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HardwareController {
     private final IHardwareDtoService hardwareDtoService;
     @GetMapping
-    public ResponseEntity<Page<HardwareDto>> findAll(Pageable pageable){
-        return new ResponseEntity<>(hardwareDtoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<HardwareDto>> findAll(HardwareSpecification specification, Pageable pageable){
+        return new ResponseEntity<>(hardwareDtoService.findAll(specification, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{serie}")
