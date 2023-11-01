@@ -53,7 +53,7 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
                 throw new DuplicateKeyException("El modelo '" + modeloRequest.getNombre() + "' ya existe");
             }
         }
-        Modelo modeloActualizado = modeloRequestMapper.update(modelo, modeloRequest);
+        Modelo modeloActualizado = modeloRequestMapper.toEntity(modeloRequest);
         modeloActualizado.setId(modelo.getId());
         return modeloDtoMapper.toDto(modeloService.update(modeloActualizado));
     }

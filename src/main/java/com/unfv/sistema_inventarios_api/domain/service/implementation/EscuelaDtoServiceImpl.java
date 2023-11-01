@@ -1,12 +1,10 @@
 package com.unfv.sistema_inventarios_api.domain.service.implementation;
 
 import com.unfv.sistema_inventarios_api.domain.dto.EscuelaDto;
-import com.unfv.sistema_inventarios_api.domain.dto.FacultadDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.EscuelaDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.mapper.FacultadDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IEscuelaDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Escuela;
-import com.unfv.sistema_inventarios_api.persistance.entity.Facultad;
 import com.unfv.sistema_inventarios_api.persistance.service.IEscuelaService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.EscuelaRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.EscuelaRequest;
@@ -52,7 +50,8 @@ public class EscuelaDtoServiceImpl implements IEscuelaDtoService {
         if(!escuela.getAbreviatura().equals(escuelaRequest.getAbreviatura())){
             validarAbreviaturaUnica(escuelaRequest.getAbreviatura());
         }
-        Escuela escuelaActualizada = escuelaRequestMapper.update(escuela, escuelaRequest);
+
+        Escuela escuelaActualizada = escuelaRequestMapper.toEntity(escuelaRequest);
         escuelaActualizada.setId(escuela.getId());
         return escuelaDtoMapper.toDto(escuelaService.update(escuelaActualizada));
     }
