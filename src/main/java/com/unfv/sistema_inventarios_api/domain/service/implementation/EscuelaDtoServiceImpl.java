@@ -1,13 +1,17 @@
 package com.unfv.sistema_inventarios_api.domain.service.implementation;
 
 import com.unfv.sistema_inventarios_api.domain.dto.EscuelaDto;
+import com.unfv.sistema_inventarios_api.domain.dto.FacultadDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.EscuelaDtoMapper;
+import com.unfv.sistema_inventarios_api.domain.mapper.FacultadDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IEscuelaDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Escuela;
+import com.unfv.sistema_inventarios_api.persistance.entity.Facultad;
 import com.unfv.sistema_inventarios_api.persistance.service.IEscuelaService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.EscuelaRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.EscuelaRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +21,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EscuelaDtoServiceImpl implements IEscuelaDtoService {
     private final IEscuelaService escuelaService;
     private final EscuelaDtoMapper escuelaDtoMapper;
     private final EscuelaRequestMapper escuelaRequestMapper;
+    private final FacultadDtoMapper facultadDtoMapper;
 
     @Override
     public Page<EscuelaDto> findAll(Pageable pageable) {
@@ -34,7 +40,8 @@ public class EscuelaDtoServiceImpl implements IEscuelaDtoService {
 
     @Override
     public EscuelaDto create(EscuelaRequest escuelaRequest) {
-        validateEscuela(escuelaRequest.getAbreviatura(), escuelaRequest.getNombre());
+        validarNombreUnico(escuelaRequest.getNombre());
+        validarAbreviaturaUnica(escuelaRequest.getAbreviatura());
         Escuela escuelaCreada = escuelaService.create(escuelaRequestMapper.toEntity(escuelaRequest));
         return escuelaDtoMapper.toDto(escuelaCreada);
     }
@@ -42,11 +49,12 @@ public class EscuelaDtoServiceImpl implements IEscuelaDtoService {
     @Override
     public EscuelaDto update(String abreviatura, EscuelaRequest escuelaRequest) {
         Escuela escuela = escuelaService.findByAbreviaturaOrThrowException(abreviatura);
-        if(!escuela.getAbreviatura().equals(escuelaRequest.getAbreviatura()) || !escuela.getNombre().equals(escuelaRequest.getNombre())){
-            validateEscuela(escuelaRequest.getAbreviatura(), escuelaRequest.getNombre());
+        if(!escuela.getAbreviatura().equals(escuelaRequest.getAbreviatura())){
+            validarAbreviaturaUnica(escuelaRequest.getAbreviatura());
         }
-        Escuela escuelaActualizada = escuelaService.update(escuelaRequestMapper.update(escuela, escuelaRequest));
-        return escuelaDtoMapper.toDto(escuelaActualizada);
+        Escuela escuelaActualizada = escuelaRequestMapper.update(escuela, escuelaRequest);
+        escuelaActualizada.setId(escuela.getId());
+        return escuelaDtoMapper.toDto(escuelaService.update(escuelaActualizada));
     }
 
     @Override
@@ -55,15 +63,17 @@ public class EscuelaDtoServiceImpl implements IEscuelaDtoService {
         escuelaService.deleteById(escuela.getId());
     }
 
-    private void validateEscuela(String abreviatura, String nombre){
-        Optional<Escuela> escuelaOptional = escuelaService.findByAbreviaturaOrNombre(abreviatura, nombre);
-        if (escuelaOptional.isPresent()) {
-            if (escuelaOptional.get().getNombre().equals(nombre)) {
-                throw new DuplicateKeyException("La escuela con nombre '" + nombre + "' ya existe");
-            }
-            if (escuelaOptional.get().getAbreviatura().equals(abreviatura)) {
-                throw new DuplicateKeyException("La escuela con abreviatura '" + abreviatura + "' ya existe");
-            }
+    private void validarNombreUnico(String nombre){
+        Optional<Escuela> escuelaOptionalByNombre = escuelaService.findByNombre(nombre);
+        if (escuelaOptionalByNombre.isPresent() && (escuelaOptionalByNombre.get().getNombre().equals(nombre))) {
+            throw new DuplicateKeyException("La escuela con nombre '" + nombre + "' ya existe");
+        }
+    }
+
+    private void validarAbreviaturaUnica(String abreviatura){
+        Optional<Escuela> escuelaOptionalByAbreviatura = escuelaService.findByAbreviatura(abreviatura);
+        if (escuelaOptionalByAbreviatura.isPresent() && (escuelaOptionalByAbreviatura.get().getAbreviatura().equals(abreviatura))) {
+            throw new DuplicateKeyException("La escuela con abreviatura '" + abreviatura + "' ya existe");
         }
     }
 }

@@ -34,7 +34,8 @@ public class FacultadDtoServiceImpl implements IFacultadDtoService {
 
     @Override
     public FacultadDto create(FacultadRequest facultadRequest) {
-        validateFacultad(facultadRequest.getAbreviatura(), facultadRequest.getNombre());
+        validarNombreUnico(facultadRequest.getNombre());
+        validarAbreviaturaUnica(facultadRequest.getAbreviatura());
         Facultad facultadCreada = facultadService.create(facultadRequestMapper.toEntity(facultadRequest));
         return facultadDtoMapper.toDto(facultadCreada);
     }
@@ -42,8 +43,11 @@ public class FacultadDtoServiceImpl implements IFacultadDtoService {
     @Override
     public FacultadDto update(String abreviatura, FacultadRequest facultadRequest) {
         Facultad facultad = facultadService.findByAbreviaturaOrThrowException(abreviatura);
-        if(!facultad.getAbreviatura().equals(facultadRequest.getAbreviatura()) || !facultad.getNombre().equals(facultadRequest.getNombre())){
-            validateFacultad(facultadRequest.getAbreviatura(), facultadRequest.getNombre());
+        if(!facultad.getAbreviatura().equals(facultadRequest.getAbreviatura())){
+            validarAbreviaturaUnica(facultadRequest.getAbreviatura());
+        }
+        if(!facultad.getNombre().equals(facultadRequest.getNombre())){
+            validarNombreUnico(facultadRequest.getNombre());
         }
         Facultad facultadActualizada = facultadService.update(facultadRequestMapper.update(facultad, facultadRequest));
         return facultadDtoMapper.toDto(facultadActualizada);
@@ -55,15 +59,17 @@ public class FacultadDtoServiceImpl implements IFacultadDtoService {
         facultadService.deleteById(facultad.getId());
     }
 
-    private void validateFacultad(String abreviatura, String nombre){
-        Optional<Facultad> facultadOptional = facultadService.findByAbreviaturaOrNombre(abreviatura, nombre);
+    private void validarAbreviaturaUnica(String abreviatura) {
+        Optional<Facultad> facultadOptional = facultadService.findByAbreviatura(abreviatura);
         if (facultadOptional.isPresent()) {
-            if (facultadOptional.get().getNombre().equals(nombre)) {
-                throw new DuplicateKeyException("La facultad con nombre '" + nombre + "' ya existe");
-            }
-            if (facultadOptional.get().getAbreviatura().equals(abreviatura)) {
-                throw new DuplicateKeyException("La facultad con abreviatura '" + abreviatura + "' ya existe");
-            }
+            throw new DuplicateKeyException("La facultad con abreviatura '" + abreviatura + "' ya existe");
+        }
+    }
+
+    private void validarNombreUnico(String nombre) {
+        Optional<Facultad> facultadOptional = facultadService.findByNombre(nombre);
+        if (facultadOptional.isPresent()) {
+            throw new DuplicateKeyException("La facultad con abreviatura '" + nombre + "' ya existe");
         }
     }
 }

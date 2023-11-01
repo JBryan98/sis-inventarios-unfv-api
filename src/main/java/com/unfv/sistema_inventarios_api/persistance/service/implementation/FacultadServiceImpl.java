@@ -26,8 +26,8 @@ public class FacultadServiceImpl implements IFacultadService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Facultad> findByAbreviaturaOrNombre(String abreviatura, String nombre) {
-        return facultadRepository.findByAbreviaturaOrNombre(abreviatura, nombre);
+    public Optional<Facultad> findByNombre(String nombre) {
+        return facultadRepository.findByNombre(nombre);
     }
 
     @Override

@@ -40,7 +40,6 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
         if(modeloOptional.isPresent()){
             throw new DuplicateKeyException("El modelo '" + modeloRequest.getNombre() + "' ya existe.");
         }
-        log.info(modeloRequestMapper.toEntity(modeloRequest).toString());
         Modelo modeloCreado = modeloService.create(modeloRequestMapper.toEntity(modeloRequest));
         return modeloDtoMapper.toDto(modeloCreado);
     }
@@ -54,9 +53,9 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
                 throw new DuplicateKeyException("El modelo '" + modeloRequest.getNombre() + "' ya existe");
             }
         }
-        Modelo modeloActualizado = modeloService.update(modeloRequestMapper.update(modelo, modeloRequest));
-
-        return modeloDtoMapper.toDto(modeloActualizado);
+        Modelo modeloActualizado = modeloRequestMapper.update(modelo, modeloRequest);
+        modeloActualizado.setId(modelo.getId());
+        return modeloDtoMapper.toDto(modeloService.update(modeloActualizado));
     }
 
     @Override

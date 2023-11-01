@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface IEscuelaService {
     Page<Escuela> findAll(Pageable pageable);
     Optional<Escuela> findByAbreviatura(String abrevitura);
-    Optional<Escuela> findByAbreviaturaOrNombre(String abrevitura, String nombre);
+    Optional<Escuela> findByNombre(String nombre);
     Escuela findByAbreviaturaOrThrowException(String abreviatura);
     Escuela create(Escuela escuela);
     Escuela update(Escuela escuela);

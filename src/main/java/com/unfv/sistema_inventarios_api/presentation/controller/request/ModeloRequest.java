@@ -13,6 +13,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class ModeloRequest {
     private String nombre;
+    private String descripcion;
     private CategoriaDto categoria;
     private MarcaDto marca;
 }

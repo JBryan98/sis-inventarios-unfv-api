@@ -32,8 +32,8 @@ public class EscuelaServiceImpl implements IEscuelaService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Escuela> findByAbreviaturaOrNombre(String abrevitura, String nombre) {
-        return escuelaRepository.findByAbreviaturaOrNombre(abrevitura, nombre);
+    public Optional<Escuela> findByNombre(String nombre) {
+        return escuelaRepository.findByNombre(nombre);
     }
 
     @Override

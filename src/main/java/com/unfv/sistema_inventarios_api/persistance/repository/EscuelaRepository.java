@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface EscuelaRepository extends JpaRepository<Escuela, Long> {
-    Optional<Escuela> findByAbreviaturaOrNombre(String abreviatura, String nombre);
+    Optional<Escuela> findByNombre(String nombre);
     Optional<Escuela> findByAbreviatura(String abreviatura);
 }

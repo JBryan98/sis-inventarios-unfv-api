@@ -28,6 +28,8 @@ public class Modelo extends Auditoria{
     @Column(unique = true, nullable = false)
     private String nombre;
 
+    private String descripcion;
+
     @ManyToOne
     @JoinColumn(nullable = false, name = "id_categoria")
     private Categoria categoria;

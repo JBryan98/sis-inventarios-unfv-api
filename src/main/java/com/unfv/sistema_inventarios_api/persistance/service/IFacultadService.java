@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IFacultadService {
     Page<Facultad> findAll(Pageable pageable);
-    Optional<Facultad> findByAbreviaturaOrNombre(String abreviatura, String nombre);
+    Optional<Facultad> findByNombre(String nombre);
     Optional<Facultad> findByAbreviatura(String abreviatura);
     Facultad findByAbreviaturaOrThrowException(String abreviatura);
     Facultad create(Facultad facultad);
