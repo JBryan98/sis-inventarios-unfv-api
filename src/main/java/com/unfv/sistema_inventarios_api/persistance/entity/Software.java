@@ -1,6 +1,5 @@
 package com.unfv.sistema_inventarios_api.persistance.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,21 +26,17 @@ import java.util.Set;
 @ToString
 @Builder
 @Entity
-@Table(name = "hardware")
-public class Hardware {
+@Table(name = "software")
+public class Software {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String serie;
-
-    @Column(nullable = false)
-    private String estado;
+    private String nombre;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "id_modelo")
-    private Modelo modelo;
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
 
-    @ManyToMany(mappedBy = "hardware", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "software", fetch = FetchType.LAZY)
     private Set<Equipo> equipos = new HashSet<>();
 }

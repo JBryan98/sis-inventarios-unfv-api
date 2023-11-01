@@ -1,8 +1,8 @@
 package com.unfv.sistema_inventarios_api.presentation.controller;
 
-import com.unfv.sistema_inventarios_api.domain.dto.MarcaDto;
-import com.unfv.sistema_inventarios_api.domain.service.IMarcaDtoService;
-import com.unfv.sistema_inventarios_api.presentation.controller.request.MarcaRequest;
+import com.unfv.sistema_inventarios_api.domain.dto.EquipoDto;
+import com.unfv.sistema_inventarios_api.domain.service.IEquipoDtoService;
+import com.unfv.sistema_inventarios_api.presentation.controller.request.EquipoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,35 +19,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/sistema_inventarios_unfv/api/marcas")
+@RequestMapping("/sistema_inventarios_unfv/api/equipos")
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RequiredArgsConstructor
-public class MarcaController {
-    private final IMarcaDtoService marcaDtoService;
+public class EquipoController {
+    private final IEquipoDtoService equipoDtoService;
 
     @GetMapping
-    public ResponseEntity<Page<MarcaDto>> findAll(Pageable pageable){
-        return new ResponseEntity<>(marcaDtoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<EquipoDto>> findAll(Pageable pageable){
+        return new ResponseEntity<>(equipoDtoService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{nombre}")
-    public ResponseEntity<MarcaDto> findByNombre(@PathVariable String nombre){
-        return new ResponseEntity<>(marcaDtoService.findByNombre(nombre), HttpStatus.OK);
+    public ResponseEntity<EquipoDto> findByNombre(@PathVariable String nombre){
+        return new ResponseEntity<>(equipoDtoService.findByNombre(nombre), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<MarcaDto> create(@RequestBody MarcaRequest marcaRequest){
-        return new ResponseEntity<>(marcaDtoService.create(marcaRequest), HttpStatus.CREATED);
+    public ResponseEntity<EquipoDto> create(@RequestBody EquipoRequest equipoRequest){
+        return new ResponseEntity<>(equipoDtoService.create(equipoRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{nombre}")
-    public ResponseEntity<MarcaDto> update(@PathVariable String nombre, @RequestBody MarcaRequest marcaRequest){
-        return new ResponseEntity<>(marcaDtoService.update(nombre, marcaRequest), HttpStatus.OK);
+    public ResponseEntity<EquipoDto> update(@PathVariable String nombre, @RequestBody EquipoRequest equipoRequest){
+        return new ResponseEntity<>(equipoDtoService.update(nombre, equipoRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/{nombre}")
     public ResponseEntity<Void> delete(@PathVariable String nombre){
-        marcaDtoService.deleteByNombre(nombre);
+        equipoDtoService.deleteByNombre(nombre);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
