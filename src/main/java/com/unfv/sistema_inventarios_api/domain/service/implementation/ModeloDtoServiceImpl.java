@@ -46,7 +46,7 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
     @Override
     public ModeloDto update(Long id, ModeloRequest modeloRequest) {
         Modelo modelo = modeloService.findByIdOrThrowException(id);
-        if(modelo.getNombre().equals(modeloRequest.getNombre())){
+        if(!modelo.getNombre().equals(modeloRequest.getNombre())){
             validarNombreYCategoria(modeloRequest.getNombre(), modeloRequest.getCategoria().getNombre());
         }
         Modelo modeloActualizado = modeloRequestMapper.toEntity(modeloRequest);
