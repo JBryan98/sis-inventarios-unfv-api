@@ -25,6 +25,17 @@ public class ModeloServiceImpl implements IModeloService {
     }
 
     @Override
+    public Optional<Modelo> findById(Long id) {
+        return modeloRepository.findById(id);
+    }
+
+    @Override
+    public Modelo findByIdOrThrowException(Long id) {
+        return modeloRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("El modelo '" + id + "' no existe"));
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<Modelo> findByNombre(String nombre) {
         return modeloRepository.findByNombre(nombre);

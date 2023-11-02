@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface IModeloService {
     Page<Modelo> findAll(Pageable pageable);
+    Optional<Modelo> findById(Long id);
+    Modelo findByIdOrThrowException(Long id);
     Optional<Modelo> findByNombre(String nombre);
     Modelo findByNombreOrThrowException(String nombre);
     Modelo create(Modelo modelo);

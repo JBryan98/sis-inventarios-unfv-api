@@ -4,6 +4,7 @@ import com.unfv.sistema_inventarios_api.domain.dto.ModeloDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.ModeloDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IModeloDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Modelo;
+import com.unfv.sistema_inventarios_api.persistance.repository.ModeloRepository;
 import com.unfv.sistema_inventarios_api.persistance.service.IModeloService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.ModeloRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.ModeloRequest;
@@ -23,6 +24,7 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
     private final IModeloService modeloService;
     private final ModeloDtoMapper modeloDtoMapper;
     private final ModeloRequestMapper modeloRequestMapper;
+    private final ModeloRepository modeloRepository;
 
     @Override
     public Page<ModeloDto> findAll(Pageable pageable) {
@@ -30,28 +32,22 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
     }
 
     @Override
-    public ModeloDto findByNombre(String nombre) {
-        return modeloDtoMapper.toDto(modeloService.findByNombreOrThrowException(nombre));
+    public ModeloDto findById(Long id) {
+        return modeloDtoMapper.toDto(modeloService.findByIdOrThrowException(id));
     }
 
     @Override
     public ModeloDto create(ModeloRequest modeloRequest) {
-        Optional<Modelo> modeloOptional = modeloService.findByNombre(modeloRequest.getNombre());
-        if(modeloOptional.isPresent()){
-            throw new DuplicateKeyException("El modelo '" + modeloRequest.getNombre() + "' ya existe.");
-        }
+        validarNombreYCategoria(modeloRequest.getNombre(), modeloRequest.getCategoria().getNombre());
         Modelo modeloCreado = modeloService.create(modeloRequestMapper.toEntity(modeloRequest));
         return modeloDtoMapper.toDto(modeloCreado);
     }
 
     @Override
-    public ModeloDto update(String nombre, ModeloRequest modeloRequest) {
-        Modelo modelo = modeloService.findByNombreOrThrowException(nombre);
-        if(!modelo.getNombre().equals(modeloRequest.getNombre())){
-            Optional<Modelo> modeloOptional = modeloService.findByNombre(modeloRequest.getNombre());
-            if(modeloOptional.isPresent()){
-                throw new DuplicateKeyException("El modelo '" + modeloRequest.getNombre() + "' ya existe");
-            }
+    public ModeloDto update(Long id, ModeloRequest modeloRequest) {
+        Modelo modelo = modeloService.findByIdOrThrowException(id);
+        if(modelo.getNombre().equals(modeloRequest.getNombre())){
+            validarNombreYCategoria(modeloRequest.getNombre(), modeloRequest.getCategoria().getNombre());
         }
         Modelo modeloActualizado = modeloRequestMapper.toEntity(modeloRequest);
         modeloActualizado.setId(modelo.getId());
@@ -59,8 +55,15 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
     }
 
     @Override
-    public void deleteByNombre(String nombre) {
-        Modelo modelo = modeloService.findByNombreOrThrowException(nombre);
+    public void deleteByNombre(Long id) {
+        Modelo modelo = modeloService.findByIdOrThrowException(id);
         modeloService.deleteById(modelo.getId());
+    }
+
+    public void validarNombreYCategoria(String nombre, String nombreCategoria){
+        Optional<Modelo> modeloOptional = modeloRepository.findByNombreAndCategoria_Nombre(nombre, nombreCategoria);
+        if (modeloOptional.isPresent() && (modeloOptional.get().getCategoria().getNombre().equals(nombreCategoria))) {
+            throw new DuplicateKeyException("El modelo '" + nombre + "' ya esta registrado en la categoría '" + nombreCategoria + "'");
+        }
     }
 }

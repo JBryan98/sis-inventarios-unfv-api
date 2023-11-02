@@ -30,9 +30,9 @@ public class ModeloController {
         return new ResponseEntity<>(modeloDtoService.findAll(pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/{nombre}")
-    public ResponseEntity<ModeloDto> findByNombre(@PathVariable String nombre){
-        return new ResponseEntity<>(modeloDtoService.findByNombre(nombre), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<ModeloDto> findByNombre(@PathVariable Long id){
+        return new ResponseEntity<>(modeloDtoService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
@@ -40,14 +40,14 @@ public class ModeloController {
         return new ResponseEntity<>(modeloDtoService.create(modeloRequest), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{nombre}")
-    public ResponseEntity<ModeloDto> update(@PathVariable String nombre, @RequestBody ModeloRequest modeloRequest){
-        return new ResponseEntity<>(modeloDtoService.update(nombre, modeloRequest), HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<ModeloDto> update(@PathVariable Long id, @RequestBody ModeloRequest modeloRequest){
+        return new ResponseEntity<>(modeloDtoService.update(id, modeloRequest), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{nombre}")
-    public ResponseEntity<Void> deleteByNombre(@PathVariable String nombre){
-        modeloDtoService.deleteByNombre(nombre);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteByNombre(@PathVariable Long id){
+        modeloDtoService.deleteByNombre(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
