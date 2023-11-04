@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,12 +28,16 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "equipos")
-public class Equipo {
+public class Equipo extends Auditoria {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
     private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "id_ubicacion")
+    private Ubicacion ubicacion;
 
     @ManyToMany
     @JoinTable(

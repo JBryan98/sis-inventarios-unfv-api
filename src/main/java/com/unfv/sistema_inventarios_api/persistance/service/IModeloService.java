@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface IModeloService {
     Page<Modelo> findAll(Pageable pageable);
     Optional<Modelo> findById(Long id);
+    Optional<Modelo> findByNombreAndSubcategoria_Nombre(String nombre, String subcategoriaNombre);
     Modelo findByIdOrThrowException(Long id);
     Optional<Modelo> findByNombre(String nombre);
     Modelo findByNombreOrThrowException(String nombre);

@@ -4,7 +4,6 @@ import com.unfv.sistema_inventarios_api.domain.dto.ModeloDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.ModeloDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IModeloDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Modelo;
-import com.unfv.sistema_inventarios_api.persistance.repository.ModeloRepository;
 import com.unfv.sistema_inventarios_api.persistance.service.IModeloService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.ModeloRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.ModeloRequest;
@@ -24,7 +23,6 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
     private final IModeloService modeloService;
     private final ModeloDtoMapper modeloDtoMapper;
     private final ModeloRequestMapper modeloRequestMapper;
-    private final ModeloRepository modeloRepository;
 
     @Override
     public Page<ModeloDto> findAll(Pageable pageable) {
@@ -60,10 +58,10 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
         modeloService.deleteById(modelo.getId());
     }
 
-    public void validarNombreYCategoria(String nombre, String nombreCategoria){
-        Optional<Modelo> modeloOptional = modeloRepository.findByNombreAndCategoria_Nombre(nombre, nombreCategoria);
-        if (modeloOptional.isPresent() && (modeloOptional.get().getCategoria().getNombre().equals(nombreCategoria))) {
-            throw new DuplicateKeyException("El modelo '" + nombre + "' ya esta registrado en la categoría '" + nombreCategoria + "'");
+    public void validarNombreYCategoria(String nombre, String nombreSubcategoria){
+        Optional<Modelo> modeloOptional = modeloService.findByNombreAndSubcategoria_Nombre(nombre, nombreSubcategoria);
+        if (modeloOptional.isPresent() && (modeloOptional.get().getSubcategoria().getNombre().equals(nombreSubcategoria))) {
+            throw new DuplicateKeyException("El modelo '" + nombre + "' ya esta registrado en la subcategoria '" + nombreSubcategoria + "'");
         }
     }
 }

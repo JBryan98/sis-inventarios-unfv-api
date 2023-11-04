@@ -27,15 +27,15 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "software")
-public class Software {
+public class Software extends Auditoria {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "id_categoria")
-    private Categoria categoria;
+    @JoinColumn(name = "id_subcategoria")
+    private Subcategoria subcategoria;
 
     @ManyToMany(mappedBy = "software", fetch = FetchType.LAZY)
     private Set<Equipo> equipos = new HashSet<>();

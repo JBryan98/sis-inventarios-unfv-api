@@ -30,6 +30,11 @@ public class ModeloServiceImpl implements IModeloService {
     }
 
     @Override
+    public Optional<Modelo> findByNombreAndSubcategoria_Nombre(String nombre, String subcategoriaNombre) {
+        return modeloRepository.findByNombreAndSubcategoria_Nombre(nombre, subcategoriaNombre);
+    }
+
+    @Override
     public Modelo findByIdOrThrowException(Long id) {
         return modeloRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("El modelo '" + id + "' no existe"));

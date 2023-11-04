@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ModeloRepository extends JpaRepository<Modelo, Long> {
     Optional<Modelo> findByNombre(String nombre);
-    Optional<Modelo> findByNombreAndCategoria_Nombre(String nombre, String categoriaNombre);
+    Optional<Modelo> findByNombreAndSubcategoria_Nombre(String nombre, String subcategoriaNombre);
 }

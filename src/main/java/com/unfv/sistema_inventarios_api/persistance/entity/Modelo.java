@@ -31,8 +31,8 @@ public class Modelo extends Auditoria{
     private String descripcion;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "id_categoria")
-    private Categoria categoria;
+    @JoinColumn(nullable = false, name = "id_subcategoria")
+    private Subcategoria subcategoria;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "id_marca")
