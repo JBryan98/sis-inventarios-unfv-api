@@ -15,6 +15,6 @@ public class ModeloDto {
     private Long id;
     private String nombre;
     private String descripcion;
-    private CategoriaDto categoria;
+    private SubcategoriaDto subcategoria;
     private MarcaDto marca;
 }

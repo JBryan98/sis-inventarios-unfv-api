@@ -36,7 +36,7 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
 
     @Override
     public ModeloDto create(ModeloRequest modeloRequest) {
-        validarNombreYCategoria(modeloRequest.getNombre(), modeloRequest.getCategoria().getNombre());
+        validarNombreYCategoria(modeloRequest.getNombre(), modeloRequest.getSubcategoria().getNombre());
         Modelo modeloCreado = modeloService.create(modeloRequestMapper.toEntity(modeloRequest));
         return modeloDtoMapper.toDto(modeloCreado);
     }
@@ -45,7 +45,7 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
     public ModeloDto update(Long id, ModeloRequest modeloRequest) {
         Modelo modelo = modeloService.findByIdOrThrowException(id);
         if(!modelo.getNombre().equals(modeloRequest.getNombre())){
-            validarNombreYCategoria(modeloRequest.getNombre(), modeloRequest.getCategoria().getNombre());
+            validarNombreYCategoria(modeloRequest.getNombre(), modeloRequest.getSubcategoria().getNombre());
         }
         Modelo modeloActualizado = modeloRequestMapper.toEntity(modeloRequest);
         modeloActualizado.setId(modelo.getId());
