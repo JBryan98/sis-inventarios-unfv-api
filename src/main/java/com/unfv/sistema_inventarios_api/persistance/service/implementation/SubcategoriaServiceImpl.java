@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.Subcategoria;
 import com.unfv.sistema_inventarios_api.persistance.repository.SubcategoriaRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.SubcategoriaSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.ISubcategoriaService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,8 @@ public class SubcategoriaServiceImpl implements ISubcategoriaService {
     private final SubcategoriaRepository subcategoriaRepository;
     @Override
     @Transactional(readOnly = true)
-    public Page<Subcategoria> findAll(Pageable pageable) {
-        return subcategoriaRepository.findAll(pageable);
+    public Page<Subcategoria> findAll(SubcategoriaSpecification specification, Pageable pageable) {
+        return subcategoriaRepository.findAll(specification, pageable);
     }
 
     @Override

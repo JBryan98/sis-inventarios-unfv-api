@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.presentation.controller;
 
 import com.unfv.sistema_inventarios_api.domain.dto.SubcategoriaDto;
 import com.unfv.sistema_inventarios_api.domain.service.ISubcategoriaDtoService;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.SubcategoriaSpecification;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.SubcategoriaRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,8 @@ public class SubcategoriaController {
     private final ISubcategoriaDtoService subcategoriaDtoService;
 
     @GetMapping
-    public ResponseEntity<Page<SubcategoriaDto>> findAll(Pageable pageable){
-        return new ResponseEntity<>(subcategoriaDtoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<SubcategoriaDto>> findAll(SubcategoriaSpecification specification, Pageable pageable){
+        return new ResponseEntity<>(subcategoriaDtoService.findAll(specification, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{nombre}")

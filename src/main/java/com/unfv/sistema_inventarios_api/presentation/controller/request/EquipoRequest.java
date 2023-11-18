@@ -1,6 +1,7 @@
 package com.unfv.sistema_inventarios_api.presentation.controller.request;
 
 import com.unfv.sistema_inventarios_api.domain.dto.HardwareDto;
+import com.unfv.sistema_inventarios_api.domain.dto.SoftwareDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,5 @@ import java.util.Set;
 public class EquipoRequest {
     private String nombre;
     private Set<HardwareDto> hardware;
+    private Set<SoftwareDto> software;
 }

@@ -17,4 +17,5 @@ public class EquipoDto {
     private Long id;
     private String nombre;
     private Set<HardwareDto> hardware;
+    private Set<SoftwareDto> software;
 }

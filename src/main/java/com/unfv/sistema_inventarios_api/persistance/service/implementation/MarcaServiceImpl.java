@@ -50,6 +50,6 @@ public class MarcaServiceImpl implements IMarcaService {
 
     @Override
     public void deleteById(Long id) {
-        marcaRepository.findById(id);
+        marcaRepository.deleteById(id);
     }
 }

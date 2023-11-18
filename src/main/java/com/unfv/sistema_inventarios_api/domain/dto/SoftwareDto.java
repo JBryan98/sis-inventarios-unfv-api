@@ -11,9 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EscuelaDto {
+
+public class SoftwareDto {
     private Long id;
     private String nombre;
-    private String abreviatura;
-    private FacultadDto facultad;
+    private SubcategoriaDto subcategoria;
 }

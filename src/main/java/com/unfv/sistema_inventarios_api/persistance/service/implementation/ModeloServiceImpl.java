@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.Modelo;
 import com.unfv.sistema_inventarios_api.persistance.repository.ModeloRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.ModeloSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IModeloService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class ModeloServiceImpl implements IModeloService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Modelo> findAll(Pageable pageable) {
-        return modeloRepository.findAll(pageable);
+    public Page<Modelo> findAll(ModeloSpecification specification, Pageable pageable) {
+        return modeloRepository.findAll(specification, pageable);
     }
 
     @Override

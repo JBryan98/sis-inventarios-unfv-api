@@ -4,6 +4,7 @@ import com.unfv.sistema_inventarios_api.domain.dto.SubcategoriaDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.SubcategoriaDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.ISubcategoriaDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Subcategoria;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.SubcategoriaSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.ISubcategoriaService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.SubcategoriaRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.SubcategoriaRequest;
@@ -24,8 +25,8 @@ public class SubcategoriaDtoServiceImpl implements ISubcategoriaDtoService {
 
 
     @Override
-    public Page<SubcategoriaDto> findAll(Pageable pageable) {
-        return subcategoriaService.findAll(pageable).map(subcategoriaDtoMapper::toDto);
+    public Page<SubcategoriaDto> findAll(SubcategoriaSpecification specification, Pageable pageable) {
+        return subcategoriaService.findAll(specification, pageable).map(subcategoriaDtoMapper::toDto);
     }
 
     @Override

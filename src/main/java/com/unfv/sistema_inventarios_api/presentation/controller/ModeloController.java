@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.presentation.controller;
 
 import com.unfv.sistema_inventarios_api.domain.dto.ModeloDto;
 import com.unfv.sistema_inventarios_api.domain.service.IModeloDtoService;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.ModeloSpecification;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.ModeloRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,8 @@ public class ModeloController {
     private final IModeloDtoService modeloDtoService;
 
     @GetMapping
-    public ResponseEntity<Page<ModeloDto>> findAll(Pageable pageable){
-        return new ResponseEntity<>(modeloDtoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<ModeloDto>> findAll(ModeloSpecification specification, Pageable pageable){
+        return new ResponseEntity<>(modeloDtoService.findAll(specification, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

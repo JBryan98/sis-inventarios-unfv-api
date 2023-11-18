@@ -9,6 +9,7 @@ import com.unfv.sistema_inventarios_api.persistance.service.IHardwareService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.HardwareRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.HardwareRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class HardwareDtoServiceImpl implements IHardwareDtoService {
 
     private final IHardwareService hardwareService;
@@ -47,7 +49,7 @@ public class HardwareDtoServiceImpl implements IHardwareDtoService {
         if(!hardware.getSerie().equals(hardwareRequest.getSerie())){
             validateHardware(hardwareRequest.getSerie());
         }
-        Hardware hardwareActualizado = hardwareService.update(hardwareRequestMapper.toEntity(hardwareRequest));
+        Hardware hardwareActualizado = hardwareService.update(hardwareRequestMapper.update(hardware, hardwareRequest));
         return hardwareDtoMapper.toDto(hardwareActualizado);
     }
 

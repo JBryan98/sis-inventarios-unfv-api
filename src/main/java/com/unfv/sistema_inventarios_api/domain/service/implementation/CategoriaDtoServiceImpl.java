@@ -37,7 +37,7 @@ public class CategoriaDtoServiceImpl implements ICategoriaDtoService {
     public CategoriaDto create(CategoriaRequest request) {
         Optional<Categoria> categoriaOptional = categoriaService.findByNombre(request.getNombre());
         if(categoriaOptional.isPresent()){
-            throw new EntityNotFoundException("La categoria '" + request.getNombre() + "' ya existe");
+            throw new DuplicateKeyException("La categoria '" + request.getNombre() + "' ya existe");
         }
         Categoria categoria = categoriaService.create(categoriaRequestMapper.toEntity(request));
         return categoriaDtoMapper.toDto(categoria);

@@ -4,6 +4,7 @@ import com.unfv.sistema_inventarios_api.domain.dto.ModeloDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.ModeloDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IModeloDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Modelo;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.ModeloSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IModeloService;
 import com.unfv.sistema_inventarios_api.presentation.controller.mapper.ModeloRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.ModeloRequest;
@@ -25,8 +26,8 @@ public class ModeloDtoServiceImpl implements IModeloDtoService {
     private final ModeloRequestMapper modeloRequestMapper;
 
     @Override
-    public Page<ModeloDto> findAll(Pageable pageable) {
-        return modeloService.findAll(pageable).map(modeloDtoMapper::toDto);
+    public Page<ModeloDto> findAll(ModeloSpecification specification, Pageable pageable) {
+        return modeloService.findAll(specification, pageable).map(modeloDtoMapper::toDto);
     }
 
     @Override
