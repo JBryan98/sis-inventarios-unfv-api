@@ -6,7 +6,7 @@ import com.unfv.sistema_inventarios_api.domain.service.IModeloDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Modelo;
 import com.unfv.sistema_inventarios_api.persistance.repository.specifications.ModeloSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IModeloService;
-import com.unfv.sistema_inventarios_api.presentation.controller.mapper.ModeloRequestMapper;
+import com.unfv.sistema_inventarios_api.presentation.controller.request.mapper.ModeloRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.ModeloRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

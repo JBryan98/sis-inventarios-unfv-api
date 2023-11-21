@@ -6,7 +6,7 @@ import com.unfv.sistema_inventarios_api.domain.service.ISubcategoriaDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Subcategoria;
 import com.unfv.sistema_inventarios_api.persistance.repository.specifications.SubcategoriaSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.ISubcategoriaService;
-import com.unfv.sistema_inventarios_api.presentation.controller.mapper.SubcategoriaRequestMapper;
+import com.unfv.sistema_inventarios_api.presentation.controller.request.mapper.SubcategoriaRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.SubcategoriaRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;

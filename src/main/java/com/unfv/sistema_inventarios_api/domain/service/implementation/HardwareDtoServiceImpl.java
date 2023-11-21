@@ -6,7 +6,7 @@ import com.unfv.sistema_inventarios_api.domain.service.IHardwareDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Hardware;
 import com.unfv.sistema_inventarios_api.persistance.repository.specifications.HardwareSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IHardwareService;
-import com.unfv.sistema_inventarios_api.presentation.controller.mapper.HardwareRequestMapper;
+import com.unfv.sistema_inventarios_api.presentation.controller.request.mapper.HardwareRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.HardwareRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,11 @@ public class EquipoServiceImpl implements IEquipoService {
     public Equipo findByNombreOrThrowException(String nombre) {
         return equipoRepository.findByNombre(nombre)
                 .orElseThrow(() -> new EntityNotFoundException("El equipo '" + nombre + "' no existe"));
+    }
+
+    @Override
+    public List<Equipo> saveAll(List<Equipo> equipos) {
+        return equipoRepository.saveAll(equipos);
     }
 
     @Override

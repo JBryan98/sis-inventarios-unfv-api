@@ -5,17 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 public class EquipoDto {
     private Long id;
     private String nombre;
-    private Set<HardwareDto> hardware;
-    private Set<SoftwareDto> software;
+    private UbicacionDto ubicacion;
 }

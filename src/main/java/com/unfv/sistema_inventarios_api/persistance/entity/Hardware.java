@@ -2,12 +2,10 @@ package com.unfv.sistema_inventarios_api.persistance.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,9 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -42,6 +37,8 @@ public class Hardware extends Auditoria{
     @JoinColumn(nullable = false, name = "id_modelo")
     private Modelo modelo;
 
-    @ManyToMany(mappedBy = "hardware", fetch = FetchType.LAZY)
-    private Set<Equipo> equipos = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "id_equipo")
+    private Equipo equipo;
 }

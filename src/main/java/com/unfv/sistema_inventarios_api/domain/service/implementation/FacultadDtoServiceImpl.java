@@ -5,7 +5,7 @@ import com.unfv.sistema_inventarios_api.domain.mapper.FacultadDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IFacultadDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Facultad;
 import com.unfv.sistema_inventarios_api.persistance.service.IFacultadService;
-import com.unfv.sistema_inventarios_api.presentation.controller.mapper.FacultadRequestMapper;
+import com.unfv.sistema_inventarios_api.presentation.controller.request.mapper.FacultadRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.FacultadRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;

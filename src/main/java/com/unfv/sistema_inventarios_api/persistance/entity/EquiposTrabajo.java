@@ -33,6 +33,6 @@ public class EquiposTrabajo extends Auditoria{
     private Modelo modelo;
 
     @ManyToOne
-    @JoinColumn(name = "id_ubicacion", nullable = false)
+    @JoinColumn(name = "id_ubicacion")
     private Ubicacion ubicacion;
 }

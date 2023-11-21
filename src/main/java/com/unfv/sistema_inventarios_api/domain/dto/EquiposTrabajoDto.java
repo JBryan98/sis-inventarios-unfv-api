@@ -1,5 +1,6 @@
 package com.unfv.sistema_inventarios_api.domain.dto;
 
+import com.unfv.sistema_inventarios_api.persistance.entity.Ubicacion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,8 +14,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Builder
-public class SoftwareDto {
+public class EquiposTrabajoDto {
     private Long id;
-    private String nombre;
-    private SubcategoriaDto subcategoria;
+    private String serie;
+    private ModeloDto modelo;
+    private Ubicacion ubicacion;
 }

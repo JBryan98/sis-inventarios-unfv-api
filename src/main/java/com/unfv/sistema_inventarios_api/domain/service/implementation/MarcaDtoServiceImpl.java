@@ -5,7 +5,7 @@ import com.unfv.sistema_inventarios_api.domain.mapper.MarcaDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IMarcaDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Marca;
 import com.unfv.sistema_inventarios_api.persistance.service.IMarcaService;
-import com.unfv.sistema_inventarios_api.presentation.controller.mapper.MarcaRequestMapper;
+import com.unfv.sistema_inventarios_api.presentation.controller.request.mapper.MarcaRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.MarcaRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;

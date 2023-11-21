@@ -7,14 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Builder
-public class SoftwareDto {
+public class UbicacionDto {
     private Long id;
     private String nombre;
-    private SubcategoriaDto subcategoria;
+    private FacultadDto facultad;
+    private Set<EquipoDto> equipos;
 }

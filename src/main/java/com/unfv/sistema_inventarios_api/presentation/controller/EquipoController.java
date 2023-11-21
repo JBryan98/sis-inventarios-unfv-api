@@ -1,5 +1,6 @@
 package com.unfv.sistema_inventarios_api.presentation.controller;
 
+import com.unfv.sistema_inventarios_api.domain.dto.EquipoConComponentesDto;
 import com.unfv.sistema_inventarios_api.domain.dto.EquipoDto;
 import com.unfv.sistema_inventarios_api.domain.service.IEquipoDtoService;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.EquipoRequest;
@@ -31,17 +32,17 @@ public class EquipoController {
     }
 
     @GetMapping("/{nombre}")
-    public ResponseEntity<EquipoDto> findByNombre(@PathVariable String nombre){
+    public ResponseEntity<EquipoConComponentesDto> findByNombre(@PathVariable String nombre){
         return new ResponseEntity<>(equipoDtoService.findByNombre(nombre), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<EquipoDto> create(@RequestBody EquipoRequest equipoRequest){
+    public ResponseEntity<EquipoConComponentesDto> create(@RequestBody EquipoRequest equipoRequest){
         return new ResponseEntity<>(equipoDtoService.create(equipoRequest), HttpStatus.CREATED);
     }
 
     @PutMapping("/{nombre}")
-    public ResponseEntity<EquipoDto> update(@PathVariable String nombre, @RequestBody EquipoRequest equipoRequest){
+    public ResponseEntity<EquipoConComponentesDto> update(@PathVariable String nombre, @RequestBody EquipoRequest equipoRequest){
         return new ResponseEntity<>(equipoDtoService.update(nombre, equipoRequest), HttpStatus.OK);
     }
 

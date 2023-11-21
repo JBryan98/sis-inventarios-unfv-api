@@ -11,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +37,11 @@ public class HardServiceImpl implements IHardwareService {
     public Hardware findBySerieOrThrowException(String serie) {
         return hardwareRepository.findBySerie(serie)
                 .orElseThrow(() -> new EntityNotFoundException("El hardware '" + serie + "' no existe"));
+    }
+
+    @Override
+    public List<Hardware> saveAll(Set<Hardware> hardware) {
+        return hardwareRepository.saveAll(hardware);
     }
 
     @Override

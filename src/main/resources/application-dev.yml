@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost\MSSQLSERVER:1433;database=unfv_sistema_inventarios_prod;integratedSecurity=false;encrypt=true;trustServerCertificate=true;
+    url: jdbc:sqlserver://localhost\MSSQLSERVER:1433;database=unfv_sistema_inventarios_dev;integratedSecurity=false;encrypt=true;trustServerCertificate=true;
     username: sa
     password: admin
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
