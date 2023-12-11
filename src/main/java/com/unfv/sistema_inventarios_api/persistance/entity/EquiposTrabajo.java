@@ -28,6 +28,8 @@ public class EquiposTrabajo extends Auditoria{
     @Column(unique = true, nullable = false)
     private String serie;
 
+    private String estado;
+
     @ManyToOne
     @JoinColumn(name = "id_modelo", nullable = false)
     private Modelo modelo;

@@ -11,11 +11,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -23,6 +25,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 @Entity
 @Table(name = "ubicaciones")
 public class Ubicacion extends Auditoria{
@@ -36,9 +39,9 @@ public class Ubicacion extends Auditoria{
     @JoinColumn(name = "id_facultad", nullable = false)
     private Facultad facultad;
 
-    @OneToMany(mappedBy = "ubicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EquiposTrabajo> equiposTrabajos;
+    @OneToMany(mappedBy = "ubicacion")
+    private Set<EquiposTrabajo> equiposTrabajo = new HashSet<>();
 
-    @OneToMany(mappedBy = "ubicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Equipo> equipos;
+    @OneToMany(mappedBy = "ubicacion")
+    private Set<Equipo> equipos = new HashSet<>();
 }

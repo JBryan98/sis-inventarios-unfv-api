@@ -1,5 +1,4 @@
 package com.unfv.sistema_inventarios_api;
-//3930217
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

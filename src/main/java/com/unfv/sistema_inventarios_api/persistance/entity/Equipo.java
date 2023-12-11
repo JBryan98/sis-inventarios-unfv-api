@@ -35,14 +35,17 @@ public class Equipo extends Auditoria {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String nombre;
+
+    @Column(length = 50, nullable = false)
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "id_ubicacion")
     private Ubicacion ubicacion;
 
-    @OneToMany(mappedBy = "equipo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "equipo")
     private Set<Hardware> hardware = new HashSet<>();
 
     @ManyToMany

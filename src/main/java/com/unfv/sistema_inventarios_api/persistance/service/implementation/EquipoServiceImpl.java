@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.Equipo;
 import com.unfv.sistema_inventarios_api.persistance.repository.EquipoRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.EquipoSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IEquipoService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -19,8 +21,9 @@ import java.util.Optional;
 public class EquipoServiceImpl implements IEquipoService {
     private final EquipoRepository equipoRepository;
     @Override
-    public Page<Equipo> findAll(Pageable pageable) {
-        return equipoRepository.findAll(pageable);
+    public Page<Equipo> findAll(EquipoSpecification specification, Pageable pageable) {
+
+        return equipoRepository.findAll(specification, pageable);
     }
 
     @Override
@@ -35,7 +38,7 @@ public class EquipoServiceImpl implements IEquipoService {
     }
 
     @Override
-    public List<Equipo> saveAll(List<Equipo> equipos) {
+    public List<Equipo> saveAll(Set<Equipo> equipos) {
         return equipoRepository.saveAll(equipos);
     }
 

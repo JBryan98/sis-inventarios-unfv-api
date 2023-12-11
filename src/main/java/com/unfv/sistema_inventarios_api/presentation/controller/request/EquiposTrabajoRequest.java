@@ -1,8 +1,7 @@
-package com.unfv.sistema_inventarios_api.domain.dto;
+package com.unfv.sistema_inventarios_api.presentation.controller.request;
 
-import com.unfv.sistema_inventarios_api.persistance.entity.Ubicacion;
+import com.unfv.sistema_inventarios_api.domain.dto.ModeloDto;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,14 +9,11 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Builder
-public class EquiposTrabajoDto {
-    private Long id;
+public class EquiposTrabajoRequest {
     private String serie;
     private String estado;
     private ModeloDto modelo;
-    private UbicacionDto ubicacion;
 }

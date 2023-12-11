@@ -3,6 +3,7 @@ package com.unfv.sistema_inventarios_api.presentation.controller;
 import com.unfv.sistema_inventarios_api.domain.dto.EquipoConComponentesDto;
 import com.unfv.sistema_inventarios_api.domain.dto.EquipoDto;
 import com.unfv.sistema_inventarios_api.domain.service.IEquipoDtoService;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.EquipoSpecification;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.EquipoRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,8 +28,8 @@ public class EquipoController {
     private final IEquipoDtoService equipoDtoService;
 
     @GetMapping
-    public ResponseEntity<Page<EquipoDto>> findAll(Pageable pageable){
-        return new ResponseEntity<>(equipoDtoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<EquipoDto>> findAll(EquipoSpecification specification, Pageable pageable){
+        return new ResponseEntity<>(equipoDtoService.findAll(specification, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{nombre}")
@@ -39,6 +40,11 @@ public class EquipoController {
     @PostMapping
     public ResponseEntity<EquipoConComponentesDto> create(@RequestBody EquipoRequest equipoRequest){
         return new ResponseEntity<>(equipoDtoService.create(equipoRequest), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/administrar-equipo")
+    public ResponseEntity<EquipoConComponentesDto> administrarEquipo(@RequestBody EquipoRequest equipoRequest){
+        return new ResponseEntity<>(equipoDtoService.administrarEquipoHardwareYSoftware(equipoRequest), HttpStatus.OK);
     }
 
     @PutMapping("/{nombre}")

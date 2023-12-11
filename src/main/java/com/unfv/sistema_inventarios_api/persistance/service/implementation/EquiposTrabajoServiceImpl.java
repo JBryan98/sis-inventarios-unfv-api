@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.EquiposTrabajo;
 import com.unfv.sistema_inventarios_api.persistance.repository.EquiposTrabajoRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.EquiposTrabajoSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IEquiposTrabajoService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +23,8 @@ public class EquiposTrabajoServiceImpl implements IEquiposTrabajoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<EquiposTrabajo> findAll(Pageable pageable) {
-        return equiposTrabajoRepository.findAll(pageable);
+    public Page<EquiposTrabajo> findAll(EquiposTrabajoSpecification specification, Pageable pageable) {
+        return equiposTrabajoRepository.findAll(specification, pageable);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class EquiposTrabajoServiceImpl implements IEquiposTrabajoService {
     }
 
     @Override
-    public List<EquiposTrabajo> saveAll(List<EquiposTrabajo> equiposTrabajos) {
+    public List<EquiposTrabajo> saveAll(Set<EquiposTrabajo> equiposTrabajos) {
         return equiposTrabajoRepository.saveAll(equiposTrabajos);
     }
 

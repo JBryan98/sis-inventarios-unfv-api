@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Set;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,5 +17,4 @@ public class UbicacionDto {
     private Long id;
     private String nombre;
     private FacultadDto facultad;
-    private Set<EquipoDto> equipos;
 }

@@ -18,6 +18,8 @@ import java.util.Set;
 public class EquipoConComponentesDto {
     private Long id;
     private String nombre;
+    private String estado;
+    private UbicacionDto ubicacion;
     private Set<SoftwareDto> software;
     private Set<HardwareDto> hardware;
 }

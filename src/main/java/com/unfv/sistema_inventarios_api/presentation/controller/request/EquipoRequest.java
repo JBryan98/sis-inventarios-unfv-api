@@ -18,6 +18,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class EquipoRequest {
     private String nombre;
+    private String estado;
+    private UbicacionDto ubicacion;
     private Set<HardwareDto> hardware;
     private Set<SoftwareDto> software;
 }
