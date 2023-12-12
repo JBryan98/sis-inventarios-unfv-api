@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class SoftwareServiceImpl implements ISoftwareService {
 
     private final SoftwareRepository softwareRepository;

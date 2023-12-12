@@ -8,6 +8,7 @@ import com.unfv.sistema_inventarios_api.persistance.service.ISoftwareService;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.mapper.SoftwareRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.SoftwareRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SoftwareDtoServiceImpl implements ISoftwareDtoService {
     private final ISoftwareService softwareService;
     private final SoftwareDtoMapper softwareDtoMapper;
@@ -45,7 +47,8 @@ public class SoftwareDtoServiceImpl implements ISoftwareDtoService {
         if(!software.getNombre().equals(softwareRequest.getNombre())){
             validarSoftwareNombre(softwareRequest.getNombre());
         }
-        Software softwareActualizado = softwareRequestMapper.update(software, softwareRequest);
+        Software softwareActualizado = softwareRequestMapper.toEntity(softwareRequest);
+        softwareActualizado.setId(software.getId());
         return softwareDtoMapper.toDto(softwareService.update(softwareActualizado));
     }
 
