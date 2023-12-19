@@ -1,5 +1,6 @@
 package com.unfv.sistema_inventarios_api.persistance.repository.specifications;
 
+import com.unfv.sistema_inventarios_api.persistance.entity.Equipo;
 import com.unfv.sistema_inventarios_api.persistance.entity.Hardware;
 import com.unfv.sistema_inventarios_api.persistance.entity.Marca;
 import com.unfv.sistema_inventarios_api.persistance.entity.Modelo;
@@ -7,6 +8,7 @@ import com.unfv.sistema_inventarios_api.persistance.entity.Subcategoria;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,7 @@ import java.util.List;
 @Setter
 @Slf4j
 public class HardwareSpecification implements Specification<Hardware> {
+    private String referencia;
     private String estado;
     private String serie;
     private List<String> subcategorias;
@@ -38,6 +41,17 @@ public class HardwareSpecification implements Specification<Hardware> {
         Join<Hardware, Modelo> componenteModeloJoin = root.join("modelo");
         Join<Modelo, Subcategoria> modeloCategoriaJoin = componenteModeloJoin.join("subcategoria");
         Join<Modelo, Marca> modeloMarcaJoin = componenteModeloJoin.join("marca");
+        Join<Hardware, Equipo> hardwareEquipoJoin = root.join("equipo", JoinType.LEFT);
+
+        if(StringUtils.hasText(referencia)){
+            predicates.add(criteriaBuilder.or(
+                    criteriaBuilder.like(root.get("serie"), "%" + referencia + "%"),
+                    criteriaBuilder.like(root.get("estado"), "%" + referencia + "%"),
+                    criteriaBuilder.like(componenteModeloJoin.get("nombre"), "%" + referencia + "%"),
+                    criteriaBuilder.like(modeloCategoriaJoin.get("nombre"), "%" + referencia + "%"),
+                    criteriaBuilder.like(hardwareEquipoJoin.get("nombre"), "%" + referencia + "%")
+            ));
+        }
 
         if (StringUtils.hasText(estado)) {
             Predicate estadoLikePredicate = criteriaBuilder.like(root.get("estado"), "%" + estado + "%");
