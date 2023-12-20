@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.presentation.controller;
 
 import com.unfv.sistema_inventarios_api.domain.dto.SoftwareDto;
 import com.unfv.sistema_inventarios_api.domain.service.ISoftwareDtoService;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.SoftwareSpecification;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.SoftwareRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,8 @@ public class SoftwareController {
     private final ISoftwareDtoService softwareDtoService;
     
     @GetMapping
-    public ResponseEntity<Page<SoftwareDto>> findAll(Pageable pageable){
-        return new ResponseEntity<>(softwareDtoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<SoftwareDto>> findAll(SoftwareSpecification specification, Pageable pageable){
+        return new ResponseEntity<>(softwareDtoService.findAll(specification, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{nombre}")

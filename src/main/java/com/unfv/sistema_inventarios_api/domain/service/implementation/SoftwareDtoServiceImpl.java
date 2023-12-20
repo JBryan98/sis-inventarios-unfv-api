@@ -4,6 +4,7 @@ import com.unfv.sistema_inventarios_api.domain.dto.SoftwareDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.SoftwareDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.ISoftwareDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Software;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.SoftwareSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.ISoftwareService;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.mapper.SoftwareRequestMapper;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.SoftwareRequest;
@@ -25,8 +26,8 @@ public class SoftwareDtoServiceImpl implements ISoftwareDtoService {
     private final SoftwareRequestMapper softwareRequestMapper;
 
     @Override
-    public Page<SoftwareDto> findAll(Pageable pageable) {
-        return softwareService.findAll(pageable).map(softwareDtoMapper::toDto);
+    public Page<SoftwareDto> findAll(SoftwareSpecification specification, Pageable pageable) {
+        return softwareService.findAll(specification, pageable).map(softwareDtoMapper::toDto);
     }
 
     @Override

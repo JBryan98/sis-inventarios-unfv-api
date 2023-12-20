@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.Software;
 import com.unfv.sistema_inventarios_api.persistance.repository.SoftwareRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.SoftwareSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.ISoftwareService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class SoftwareServiceImpl implements ISoftwareService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Software> findAll(Pageable pageable) {
-        return softwareRepository.findAll(pageable);
+    public Page<Software> findAll(SoftwareSpecification specification, Pageable pageable) {
+        return softwareRepository.findAll(specification, pageable);
     }
 
     @Override
