@@ -12,6 +12,7 @@ import com.unfv.sistema_inventarios_api.domain.service.IUbicacionDtoService;
 import com.unfv.sistema_inventarios_api.persistance.entity.Equipo;
 import com.unfv.sistema_inventarios_api.persistance.entity.EquiposTrabajo;
 import com.unfv.sistema_inventarios_api.persistance.entity.Ubicacion;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.UbicacionSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IEquipoService;
 import com.unfv.sistema_inventarios_api.persistance.service.IEquiposTrabajoService;
 import com.unfv.sistema_inventarios_api.persistance.service.IUbicacionService;
@@ -43,8 +44,8 @@ public class UbicacionDtoServiceImpl implements IUbicacionDtoService {
     private final UbicacionRequestMapper ubicacionRequestMapper;
 
     @Override
-    public Page<UbicacionDto> findAll(Pageable pageable) {
-        return ubicacionService.findAll(pageable).map(ubicacionDtoMapper::toDto);
+    public Page<UbicacionDto> findAll(UbicacionSpecification specification, Pageable pageable) {
+        return ubicacionService.findAll(specification, pageable).map(ubicacionDtoMapper::toDto);
     }
 
     @Override

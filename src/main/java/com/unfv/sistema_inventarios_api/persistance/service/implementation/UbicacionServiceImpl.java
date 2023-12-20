@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.Ubicacion;
 import com.unfv.sistema_inventarios_api.persistance.repository.UbicacionRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.UbicacionSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IUbicacionService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class UbicacionServiceImpl implements IUbicacionService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Ubicacion> findAll(Pageable pageable) {
-        return ubicacionRepository.findAll(pageable);
+    public Page<Ubicacion> findAll(UbicacionSpecification specification, Pageable pageable) {
+        return ubicacionRepository.findAll(specification, pageable);
     }
 
     @Override

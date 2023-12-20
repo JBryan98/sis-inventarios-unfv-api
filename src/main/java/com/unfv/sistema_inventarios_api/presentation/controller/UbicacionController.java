@@ -3,6 +3,7 @@ package com.unfv.sistema_inventarios_api.presentation.controller;
 import com.unfv.sistema_inventarios_api.domain.dto.UbicacionConEquiposDto;
 import com.unfv.sistema_inventarios_api.domain.dto.UbicacionDto;
 import com.unfv.sistema_inventarios_api.domain.service.IUbicacionDtoService;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.UbicacionSpecification;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.UbicacionRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UbicacionController {
     private final IUbicacionDtoService ubicacionDtoService;
     @GetMapping
-    public ResponseEntity<Page<UbicacionDto>> findAll(Pageable pageable){
-        return new ResponseEntity<>(ubicacionDtoService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<UbicacionDto>> findAll(UbicacionSpecification specification, Pageable pageable){
+        return new ResponseEntity<>(ubicacionDtoService.findAll(specification, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{nombre}")
