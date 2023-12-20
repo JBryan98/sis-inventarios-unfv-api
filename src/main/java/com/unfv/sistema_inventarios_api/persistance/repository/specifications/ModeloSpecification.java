@@ -26,9 +26,9 @@ import java.util.List;
 @Setter
 @Slf4j
 public class ModeloSpecification implements Specification<Modelo> {
+    private String referencia;
     private List<String> subcategorias;
     private String categoria;
-    private String nombre;
     private String marca;
 
     @Override
@@ -38,9 +38,13 @@ public class ModeloSpecification implements Specification<Modelo> {
         Join<Modelo, Marca> modeloMarcaJoin = root.join("marca");
         Join<Subcategoria, Categoria> subcategoriaCategoriaJoin = modeloSubcategoriaJoin.join("categoria");
 
-        if(StringUtils.hasText(nombre)){
-            Predicate nombreLikePredicate = criteriaBuilder.like(root.get("nombre"), "%" + nombre + "%");
-            predicates.add(nombreLikePredicate);
+        if(StringUtils.hasText(referencia)){
+            predicates.add(criteriaBuilder.or(
+               criteriaBuilder.like(root.get("nombre"), "%" + referencia + "%"),
+               criteriaBuilder.like(modeloMarcaJoin.get("nombre"), "%" + referencia +"%"),
+               criteriaBuilder.like(subcategoriaCategoriaJoin.get("nombre"), "%" + referencia +"%"),
+               criteriaBuilder.like(modeloSubcategoriaJoin.get("nombre"), "%" + referencia + "%")
+            ));
         }
 
         if(subcategorias != null && !subcategorias.isEmpty()){
