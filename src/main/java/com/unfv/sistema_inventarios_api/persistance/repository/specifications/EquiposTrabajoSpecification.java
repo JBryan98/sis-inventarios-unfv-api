@@ -71,7 +71,7 @@ public class EquiposTrabajoSpecification implements Specification<EquiposTrabajo
         }
 
         if(StringUtils.hasText(marca)){
-            Predicate marcaPredicate = criteriaBuilder.like(modeloMarcaJoin.get("marca"), "%" + marca + "%");
+            Predicate marcaPredicate = criteriaBuilder.like(modeloMarcaJoin.get("nombre"), "%" + marca + "%");
             predicates.add(marcaPredicate);
         }
 
