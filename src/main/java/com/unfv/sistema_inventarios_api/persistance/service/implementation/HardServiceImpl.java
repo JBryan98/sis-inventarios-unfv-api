@@ -20,6 +20,12 @@ import java.util.Set;
 @Transactional
 public class HardServiceImpl implements IHardwareService {
     private final HardwareRepository hardwareRepository;
+
+    @Override
+    public List<Hardware> findAllNoPage(HardwareSpecification specification) {
+        return hardwareRepository.findAll(specification);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Page<Hardware> findAll(HardwareSpecification specification, Pageable pageable) {

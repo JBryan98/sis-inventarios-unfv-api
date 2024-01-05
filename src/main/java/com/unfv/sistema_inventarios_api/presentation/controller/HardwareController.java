@@ -4,11 +4,15 @@ import com.unfv.sistema_inventarios_api.domain.dto.HardwareDto;
 import com.unfv.sistema_inventarios_api.domain.service.IHardwareDtoService;
 import com.unfv.sistema_inventarios_api.persistance.repository.specifications.HardwareSpecification;
 import com.unfv.sistema_inventarios_api.presentation.controller.request.HardwareRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.DecoderException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +23,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @RestController
 @RequestMapping("/sistema_inventarios_unfv/api/hardware")
 @CrossOrigin(origins = {"http://localhost:3000"})
+@Slf4j
 @RequiredArgsConstructor
 public class HardwareController {
     private final IHardwareDtoService hardwareDtoService;
@@ -33,6 +43,18 @@ public class HardwareController {
     @GetMapping("/{serie}")
     public ResponseEntity<HardwareDto> findByserie(@PathVariable String serie){
         return new ResponseEntity<>(hardwareDtoService.findBySerie(serie), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @GetMapping("/descargar-excel")
+    public void generateExcelReport(HttpServletResponse response, HardwareSpecification hardwareSpecification) throws IOException, DecoderException {
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        response.setContentType("application/octect-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=Reporte_hardware_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+        hardwareDtoService.downloadExcel(response, hardwareSpecification);
     }
 
     @PostMapping

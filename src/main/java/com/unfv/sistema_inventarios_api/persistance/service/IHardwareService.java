@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface IHardwareService {
+    List<Hardware> findAllNoPage(HardwareSpecification specification);
     Page<Hardware> findAll(HardwareSpecification specification, Pageable pageable);
     Optional<Hardware> findBySerie(String serie);
     Hardware findBySerieOrThrowException(String serie);
