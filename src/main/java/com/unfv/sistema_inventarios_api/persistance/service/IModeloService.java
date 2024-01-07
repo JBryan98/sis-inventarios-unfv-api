@@ -5,9 +5,11 @@ import com.unfv.sistema_inventarios_api.persistance.repository.specifications.Mo
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IModeloService {
+    List<Modelo> findAllNoPage(ModeloSpecification specification);
     Page<Modelo> findAll(ModeloSpecification specification, Pageable pageable);
     Optional<Modelo> findById(Long id);
     Optional<Modelo> findByNombreAndSubcategoria_Nombre(String nombre, String subcategoriaNombre);

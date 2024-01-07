@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,11 @@ import java.util.Optional;
 @Transactional
 public class ModeloServiceImpl implements IModeloService {
     private final ModeloRepository modeloRepository;
+
+    @Override
+    public List<Modelo> findAllNoPage(ModeloSpecification specification) {
+        return modeloRepository.findAll(specification);
+    }
 
     @Override
     @Transactional(readOnly = true)
