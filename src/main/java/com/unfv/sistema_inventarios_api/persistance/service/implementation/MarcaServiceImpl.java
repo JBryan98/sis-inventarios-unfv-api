@@ -2,6 +2,7 @@ package com.unfv.sistema_inventarios_api.persistance.service.implementation;
 
 import com.unfv.sistema_inventarios_api.persistance.entity.Marca;
 import com.unfv.sistema_inventarios_api.persistance.repository.MarcaRepository;
+import com.unfv.sistema_inventarios_api.persistance.repository.specifications.MarcaSpecification;
 import com.unfv.sistema_inventarios_api.persistance.service.IMarcaService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,9 +22,14 @@ public class MarcaServiceImpl implements IMarcaService {
     private final MarcaRepository marcaRepository;
 
     @Override
+    public List<Marca> findAllNoPage(MarcaSpecification specification) {
+        return marcaRepository.findAll(specification);
+    }
+
+    @Override
     @Transactional(readOnly = true)
-    public Page<Marca> findAll(Pageable pageable) {
-        return marcaRepository.findAll(pageable);
+    public Page<Marca> findAll(MarcaSpecification specification, Pageable pageable) {
+        return marcaRepository.findAll(specification, pageable);
     }
 
     @Override
