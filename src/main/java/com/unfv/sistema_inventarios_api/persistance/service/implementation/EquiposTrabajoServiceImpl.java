@@ -22,6 +22,11 @@ public class EquiposTrabajoServiceImpl implements IEquiposTrabajoService {
     private final EquiposTrabajoRepository equiposTrabajoRepository;
 
     @Override
+    public List<EquiposTrabajo> findAllNoPage(EquiposTrabajoSpecification specification) {
+        return equiposTrabajoRepository.findAll(specification);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Page<EquiposTrabajo> findAll(EquiposTrabajoSpecification specification, Pageable pageable) {
         return equiposTrabajoRepository.findAll(specification, pageable);
