@@ -1,5 +1,6 @@
 package com.unfv.sistema_inventarios_api.domain.service.implementation;
 
+import com.unfv.sistema_inventarios_api.common.reports.ExcelReportHelper;
 import com.unfv.sistema_inventarios_api.domain.dto.HardwareDto;
 import com.unfv.sistema_inventarios_api.domain.mapper.HardwareDtoMapper;
 import com.unfv.sistema_inventarios_api.domain.service.IHardwareDtoService;
@@ -20,7 +21,6 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -29,9 +29,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +41,7 @@ public class HardwareDtoServiceImpl implements IHardwareDtoService {
     private final IHardwareService hardwareService;
     private final HardwareDtoMapper hardwareDtoMapper;
     private final HardwareRequestMapper hardwareRequestMapper;
+    private final ExcelReportHelper excelReportHelper;
 
     @Override
     public Page<HardwareDto> findAll(HardwareSpecification specification, Pageable pageable) {
@@ -84,7 +83,7 @@ public class HardwareDtoServiceImpl implements IHardwareDtoService {
         XSSFWorkbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Hardware");
         Row row = sheet.createRow(0);
-        XSSFCellStyle style = this.tableHeaderColumnStyle(workbook);
+        XSSFCellStyle style = excelReportHelper.tableHeaderColumnStyle(workbook);
 
         Cell idHeaderCell = row.createCell(0);
         idHeaderCell.setCellValue("ID");
@@ -129,13 +128,7 @@ public class HardwareDtoServiceImpl implements IHardwareDtoService {
             dataRowIndex++;
         }
 
-        sheet.autoSizeColumn(0);
-        sheet.autoSizeColumn(1);
-        sheet.autoSizeColumn(2);
-        sheet.autoSizeColumn(3);
-        sheet.autoSizeColumn(4);
-        sheet.autoSizeColumn(5);
-        sheet.autoSizeColumn(6);
+        excelReportHelper.autoSizeSheetColumns(sheet, 6);
 
         ServletOutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);
@@ -148,21 +141,5 @@ public class HardwareDtoServiceImpl implements IHardwareDtoService {
         if(hardware.isPresent()){
             throw new DuplicateKeyException("El hardware con serie'" + serie + "' ya existe");
         }
-    }
-
-    private XSSFCellStyle tableHeaderColumnStyle(XSSFWorkbook workbook) throws DecoderException {
-        byte[] rgb = Hex.decodeHex("FF5D0D");
-        XSSFColor color = new XSSFColor(rgb, null);
-        XSSFCellStyle style = workbook.createCellStyle();
-
-        Font font = workbook.createFont();
-        font.setBold(true);
-        font.setColor(HSSFColor.HSSFColorPredefined.WHITE.getIndex());
-        style.setFont(font);
-
-        style.setFillForegroundColor(color);
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        return style;
     }
 }

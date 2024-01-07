@@ -1,5 +1,6 @@
 package com.unfv.sistema_inventarios_api.presentation.controller;
 
+import com.unfv.sistema_inventarios_api.common.reports.ExcelReportHelper;
 import com.unfv.sistema_inventarios_api.domain.dto.HardwareDto;
 import com.unfv.sistema_inventarios_api.domain.service.IHardwareDtoService;
 import com.unfv.sistema_inventarios_api.persistance.repository.specifications.HardwareSpecification;
@@ -35,6 +36,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class HardwareController {
     private final IHardwareDtoService hardwareDtoService;
+    private final ExcelReportHelper excelReportHelper;
     @GetMapping
     public ResponseEntity<Page<HardwareDto>> findAll(HardwareSpecification specification, Pageable pageable){
         return new ResponseEntity<>(hardwareDtoService.findAll(specification, pageable), HttpStatus.OK);
@@ -48,13 +50,8 @@ public class HardwareController {
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @GetMapping("/descargar-excel")
     public void generateExcelReport(HttpServletResponse response, HardwareSpecification hardwareSpecification) throws IOException, DecoderException {
-        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-        response.setContentType("application/octect-stream");
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=Reporte_hardware_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-        hardwareDtoService.downloadExcel(response, hardwareSpecification);
+        HttpServletResponse httpServletResponse = excelReportHelper.getExcelReportResponse(response, "Reporte_hardware");
+        hardwareDtoService.downloadExcel(httpServletResponse, hardwareSpecification);
     }
 
     @PostMapping
