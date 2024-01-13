@@ -20,6 +20,12 @@ import java.util.Set;
 @Transactional
 public class EquipoServiceImpl implements IEquipoService {
     private final EquipoRepository equipoRepository;
+
+    @Override
+    public List<Equipo> findAllNoPage(EquipoSpecification specification) {
+        return equipoRepository.findAll(specification);
+    }
+
     @Override
     public Page<Equipo> findAll(EquipoSpecification specification, Pageable pageable) {
 

@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface IEquipoService {
+    List<Equipo> findAllNoPage(EquipoSpecification specification);
     Page<Equipo> findAll(EquipoSpecification specification, Pageable pageable);
     Optional<Equipo> findByNombre(String nombre);
     Equipo findByNombreOrThrowException(String nombre);
